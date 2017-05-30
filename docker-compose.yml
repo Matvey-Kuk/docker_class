@@ -1,0 +1,24 @@
+ghost:
+  container_name: ghost_blog
+  volumes:
+    - ./config.js:/var/lib/ghost/config.js
+  image: ghost
+  ports:
+    - 8080:2368
+  environment:
+    - NODE_ENV=production
+  links:
+    - mysql
+  restart: always
+
+mysql:
+  container_name: blog_mysql
+  image: mysql:5.7.15
+  expose:
+    - "3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=secret
+    - MYSQL_USER=myuser
+    - MYSQL_PASSWORD=secret
+    - MYSQL_DATABASE=blog
+  restart: always
