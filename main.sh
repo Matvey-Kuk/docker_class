@@ -36,8 +36,7 @@ docker exec -it ghost-container bash
 # Build first cute image
 ##########################
 
-cd build_image_1;
-docker build -t my_ghost .;
+docker build -t my_ghost ./build_image_1;
 docker images;
 
 # Todo: start
@@ -127,3 +126,17 @@ docker rm $(docker ps -a -q)
 docker rmi $(docker images -q)
 
 docker volume rm $(docker volume ls -qf dangling=true)
+
+###########################
+# Docker registry
+###########################
+
+docker run -d -p 5000:5000 --name registry registry:2
+
+docker tag my_ghost localhost:5000/my_ghost
+
+docker push localhost:5000/my_ghost
+
+docker rmi my_ghost
+
+docker run -p 8080:2368 localhost:5000/my_ghost
