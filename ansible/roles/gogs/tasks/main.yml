@@ -1,0 +1,16 @@
+---
+- name: Update gogs config
+  template: src=app.ini dest=/opt/gogs/gogs/conf/app.ini
+
+- name: Gogs container
+  docker:
+    name: gogs
+    image: gogs/gogs
+    state: reloaded
+    pull: always
+    volumes:
+    - "/opt/gogs:/data"
+    restart_policy: always
+    ports:
+    - "127.0.0.1:3002:3000"
+    - "0.0.0.0:10022:22"

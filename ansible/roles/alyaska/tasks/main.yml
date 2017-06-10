@@ -1,0 +1,34 @@
+---
+- file: path=/opt/alyaska state=directory
+
+- name: Upload alyaska sources
+  synchronize:
+    src: alyaska
+    dest: /opt
+    mode: push
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=venv"
+      - "--exclude=db.sqlite3"
+      - "--exclude=*.pyc"
+      - "--exclude=.idea"
+      - "--exclude=node_modules"
+      - "--exclude=.meteor/local"
+
+- name: Alyaska container
+  docker_image:
+    force: yes
+    path: /opt/alyaska
+    name: alyaska
+
+- name: Run alyaska container
+  docker:
+    name: alyaska
+    image: alyaska
+    state: reloaded
+    restart_policy: always
+    volumes:
+    - "/opt/alyaska:/opt/app"
+    ports:
+    - "127.0.0.1:8082:80"
+    command: bash -c "python3 manage.py shell --settings=Project.production_settings && python3 manage.py migrate --noinput --settings=Project.production_settings && python3 manage.py runserver 0.0.0.0:80 --settings=Project.production_settings"

@@ -1,0 +1,20 @@
+---
+- name: Setup new config
+  template: src=personal_blog.conf dest=/etc/nginx/sites-enabled/
+
+- name: Setup new config
+  template: src=alyaska_blog.conf dest=/etc/nginx/sites-enabled/
+
+- name: Setup new config
+  template: src=wit.conf dest=/etc/nginx/sites-enabled/
+
+- name: Setup new config
+  template: src=alyaska.conf dest=/etc/nginx/sites-enabled/
+
+- name: Setup new config
+  template: src=gogs.conf dest=/etc/nginx/sites-enabled/
+
+- file: path=/etc/nginx/sites-enabled/default state=absent
+
+- name: Setup nginx
+  service: name=nginx state=restarted enabled=yes

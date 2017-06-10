@@ -1,0 +1,4 @@
+- name: Backup
+  synchronize:  src={{ item }} dest=backup/{{ ansible_date_time.date }}/ mode=pull
+  with_items:
+    - "/opt"

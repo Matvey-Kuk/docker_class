@@ -1,0 +1,21 @@
+---
+- name: Update personal blog config
+  template: src=config.js dest=/opt/personal_blog/config.js
+
+- name: Pull ghost image
+  docker_image:
+    name: ghost
+
+- name: Personal blog container
+  docker:
+    name: personal_blog
+    image: ghost
+    state: reloaded
+    pull: always
+    volumes:
+    - "/opt/personal_blog:/var/lib/ghost"
+    env:
+      NODE_ENV=production
+    restart_policy: always
+    ports:
+    - "127.0.0.1:8080:2368"

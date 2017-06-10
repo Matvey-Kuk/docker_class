@@ -1,0 +1,26 @@
+---
+- name: Droplet Personal
+  hosts: droplet_personal
+  remote_user: root
+
+  roles:
+    - docker
+    - personal_blog
+    - gogs
+    - chat
+    - alyaska
+    - alyaska_blog
+    - nginx
+    - backup
+
+
+- hosts: picktime
+  remote_user: root
+  vars:
+    jenkins_admin_username: asdasd
+    jenkins_admin_password: asdasd
+    jenkins_home: /var/lib/jenkins
+    jenkins_http_port: 8080
+    jenkins_hostname: 162.243.158.156
+  roles:
+    - geerlingguy.jenkins

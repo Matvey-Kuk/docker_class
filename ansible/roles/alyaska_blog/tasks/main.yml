@@ -1,0 +1,23 @@
+---
+- file: path=/opt/alyaska_blog state=directory
+
+- name: Update personal blog config
+  template: src=config.js dest=/opt/alyaska_blog/config.js
+
+- name: Pull ghost image
+  docker_image:
+    name: ghost
+
+- name: Alyaska blog container
+  docker:
+    name: alyaska_blog
+    image: ghost
+    state: reloaded
+    pull: always
+    volumes:
+    - "/opt/alyaska_blog:/var/lib/ghost"
+    env:
+      NODE_ENV=production
+    restart_policy: always
+    ports:
+    - "127.0.0.1:8081:2368"
