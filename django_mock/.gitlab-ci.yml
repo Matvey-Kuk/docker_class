@@ -1,0 +1,26 @@
+build_image:
+  script:
+    - export BRANCH=${CI_BUILD_REF_NAME//[^0-9A-Za-z]/};
+    - export BRANCH=${BRANCH,,};
+    - echo Branch $BRANCH Image $DOCKER_IMAGE_NAME-$BRANCH Build time $(date +"%T") $(date +"%m-%d-%Y") > version.txt
+    - echo $SECRET_KEY > secret_key.txt
+    - docker build -t $DOCKER_IMAGE_NAME-$BRANCH .
+
+test_image_code:
+  script:
+    - export BRANCH=${CI_BUILD_REF_NAME//[^0-9A-Za-z]/};
+    - export BRANCH=${BRANCH,,};
+    - docker run --rm $DOCKER_IMAGE_NAME-$BRANCH /bin/bash -c 'flake8 ./'
+    - docker run --rm $DOCKER_IMAGE_NAME-$BRANCH /bin/bash -c 'python3 ./manage.py test'
+
+deploy:
+  script:
+    - export BRANCH=${CI_BUILD_REF_NAME//[^0-9A-Za-z]/};
+    - export BRANCH=${BRANCH,,};
+    - sh /opt/tiny-docker-watcher/main.sh
+
+get_logs:
+  script:
+    - export BRANCH=${CI_BUILD_REF_NAME//[^0-9A-Za-z]/};
+    - export BRANCH=${BRANCH,,};
+    - docker exec $DOCKER_IMAGE_NAME-$BRANCH /bin/bash -c 'cat django.log';

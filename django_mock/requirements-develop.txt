@@ -1,0 +1,5 @@
+django==1.8.10
+django-bootstrap3==6.1.0
+flake8
+django-multiupload
+mysqlclient

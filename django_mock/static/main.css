@@ -1,0 +1,113 @@
+body {
+  padding-top: 70px;
+}
+
+.login-window {
+    width: 700px;
+    margin: auto;
+}
+
+.banner-attachment:hover {
+    background-color: rgb(161, 161, 255);
+}
+
+#close-preview:hover {
+    color: red;
+}
+
+.preview-info {
+    color: rgb(174, 173, 53);
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.preview-info.active {
+    color: green;
+}
+
+.panel-messages {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.sorted-asc:before {
+    content: '\25BC';
+}
+
+.sorted-desc:before {
+    content: '\25B2';
+}
+
+.message-list hr {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.message-list .message {
+    padding: 10px;
+    margin: 10px;
+}
+
+.new-message {
+    background-color: rgba(239, 239, 239, 0.76);
+}
+
+.table-dashboard td, .table-dashboard th {
+    text-align: center;
+}
+
+.table-users td, .table-users th {
+    text-align: center;
+}
+
+.title-container {
+    min-height: 40px;
+}
+
+.title-container h4 {
+    float: left;
+    margin-right: 10px;
+}
+
+.title-container .access-edit {
+    padding: 12px;
+    font-size: 12px;
+}
+
+.title-link {
+    color: #333;
+}
+
+.access-user-list {
+    margin-left: 20px;
+}
+
+.groups .group-name {
+    font-weight: bold;
+    min-width: 80px;
+    display: inline-block;
+}
+
+form .upload {
+    margin-bottom: 10px;
+}
+
+#upload_comment {
+    width: 100%;
+}
+
+@media (min-width:768px){
+    .modal-sm-resize {
+        width: 370px;
+    }
+}
+
+.chat-container {
+    min-height: 400px;
+}
+
+.italic{
+    font-style: italic;
+}

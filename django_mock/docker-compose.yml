@@ -1,0 +1,26 @@
+db:
+  container_name: db
+  build: Deploy/mysql-charset/.
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: password
+    MYSQL_DATABASE: project_database
+
+memcached:
+  container_name: memcached
+  image: memcached
+
+web:
+  container_name: web
+  build: .
+  command: bash -c "echo \"from django.contrib.auth import get_user_model; get_user_model().objects.create_superuser('m', 'm@m.ru', '1')\" | python3 manage.py shell --settings=Project.docker_develop_settings && python3 manage.py migrate --noinput --settings=Project.docker_develop_settings && python3 manage.py runserver 0.0.0.0:80 --settings=Project.docker_develop_settings"
+  environment:
+    MYSQL_DATABASE_NAME: project_database
+  volumes:
+    - .:/opt/app
+  ports:
+    - "80:80"
+  links:
+    - db:mysql_charset
+    - memcached
